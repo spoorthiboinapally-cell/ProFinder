@@ -1,0 +1,3645 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ProFinder | AI Sports Coach Finder</title>
+
+<style>
+:root{
+  --primary:#6c5ce7;
+  --primary2:#8b7cff;
+  --secondary:#00cec9;
+  --dark:#0d1020;
+  --card:#171d35;
+  --card2:#1e2745;
+  --text:#f5f7ff;
+  --muted:#aeb5d0;
+  --border:#2b3457;
+  --success:#00d68f;
+  --danger:#ff7675;
+  --warning:#ffd166;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(108,92,231,.15),transparent 30%),
+    radial-gradient(circle at 90% 30%,rgba(0,206,201,.10),transparent 30%),
+    linear-gradient(135deg,#0d1020,#151b35,#101426);
+  color:var(--text);
+  line-height:1.6;
+  min-height:100vh;
+}
+
+button,
+input,
+select,
+textarea{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+nav{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(13,16,32,.96);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+
+.nav-inner{
+  max-width:1250px;
+  margin:auto;
+  padding:14px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.logo{
+  font-size:26px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.logo span{
+  color:var(--secondary);
+}
+
+.nav-links{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  gap:5px;
+}
+
+.nav-links a,
+.nav-links button{
+  color:var(--text);
+  text-decoration:none;
+  background:none;
+  border:0;
+  padding:9px 11px;
+  border-radius:8px;
+}
+
+.nav-links a:hover,
+.nav-links button:hover{
+  background:#252d4c;
+}
+
+.container{
+  width:min(1200px,100%);
+  margin:auto;
+  padding:75px 20px;
+}
+
+.hero{
+  min-height:85vh;
+  display:flex;
+  align-items:center;
+  text-align:center;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(108,92,231,.35),transparent 35%),
+    radial-gradient(circle at 80% 40%,rgba(0,206,201,.20),transparent 35%);
+}
+
+.hero-content{
+  width:100%;
+}
+
+.hero h1{
+  font-size:clamp(42px,7vw,78px);
+  line-height:1;
+  margin-bottom:25px;
+}
+
+.hero h1 span{
+  color:var(--secondary);
+}
+
+.hero p{
+  max-width:780px;
+  margin:0 auto 30px;
+  color:var(--muted);
+  font-size:18px;
+}
+
+section h2{
+  font-size:36px;
+  margin-bottom:10px;
+}
+
+.section-subtitle{
+  color:var(--muted);
+  margin-bottom:30px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.card{
+  background:rgba(23,29,53,.95);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:24px;
+  box-shadow:0 15px 35px rgba(0,0,0,.18);
+}
+
+.card p{
+  color:var(--muted);
+}
+
+.icon{
+  font-size:38px;
+  margin-bottom:10px;
+}
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:13px 20px;
+  font-weight:bold;
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+}
+
+.btn-primary{
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  color:white;
+}
+
+.btn-secondary{
+  background:#293354;
+  color:white;
+}
+
+.btn-success{
+  background:var(--success);
+  color:#061b13;
+}
+
+.btn-danger{
+  background:var(--danger);
+  color:#351111;
+}
+
+.btn-warning{
+  background:var(--warning);
+  color:#2c2300;
+}
+
+.form-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+
+.center{
+  justify-content:center;
+}
+
+.form-card{
+  max-width:850px;
+  margin:auto;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+label{
+  font-weight:bold;
+  font-size:14px;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:12px 14px;
+  border-radius:9px;
+  border:1px solid var(--border);
+  background:#0e1327;
+  color:white;
+  outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:var(--secondary);
+}
+
+textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+.notice{
+  padding:15px;
+  border-radius:10px;
+  background:#233052;
+  color:#dce3ff;
+  margin:15px 0;
+}
+
+.notice.success{
+  background:rgba(0,214,143,.12);
+  border:1px solid var(--success);
+}
+
+.notice.warning{
+  background:rgba(255,209,102,.10);
+  border:1px solid var(--warning);
+}
+
+.hidden{
+  display:none!important;
+}
+
+.score{
+  font-size:55px;
+  font-weight:900;
+  color:var(--secondary);
+}
+
+.coach-card{
+  position:relative;
+}
+
+.verified{
+  display:inline-block;
+  color:#061b13;
+  background:var(--success);
+  border-radius:20px;
+  padding:3px 8px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.rating{
+  color:#ffd166;
+  margin:8px 0;
+}
+
+.match{
+  color:var(--secondary)!important;
+  font-weight:bold;
+}
+
+.dashboard-stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+
+.stat{
+  text-align:center;
+  padding:22px;
+  border-radius:15px;
+  background:#171d35;
+  border:1px solid var(--border);
+}
+
+.stat strong{
+  display:block;
+  font-size:35px;
+  color:var(--secondary);
+}
+
+.profile-row{
+  display:flex;
+  gap:15px;
+  align-items:center;
+}
+
+.avatar{
+  width:60px;
+  height:60px;
+  flex-shrink:0;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+  font-weight:bold;
+}
+
+.small-avatar{
+  width:45px;
+  height:45px;
+  font-size:18px;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.78);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:2000;
+  padding:20px;
+}
+
+.modal-box{
+  width:min(800px,100%);
+  max-height:92vh;
+  overflow:auto;
+  background:#171d35;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:25px;
+  position:relative;
+}
+
+.close{
+  position:absolute;
+  right:20px;
+  top:12px;
+  background:none;
+  border:0;
+  color:white;
+  font-size:30px;
+  z-index:10;
+}
+
+.chat{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  min-height:580px;
+}
+
+.chat-users{
+  border-right:1px solid var(--border);
+  padding:18px;
+  overflow-y:auto;
+  background:#12172c;
+}
+
+.chat-user{
+  padding:12px;
+  border-radius:12px;
+  cursor:pointer;
+  margin-bottom:8px;
+  border:1px solid transparent;
+}
+
+.chat-user:hover,
+.chat-user.active{
+  background:#293354;
+  border-color:#3c4871;
+}
+
+.chat-user-name{
+  font-weight:bold;
+}
+
+.chat-user-type{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.unread{
+  float:right;
+  background:var(--danger);
+  color:white;
+  min-width:20px;
+  height:20px;
+  border-radius:50%;
+  font-size:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.chat-window{
+  display:flex;
+  flex-direction:column;
+  min-height:580px;
+  background:#0f1428;
+}
+
+.chat-header{
+  padding:17px;
+  border-bottom:1px solid var(--border);
+  background:#171d35;
+}
+
+.chat-header .profile-row{
+  padding-right:35px;
+}
+
+.messages{
+  flex:1;
+  padding:20px;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.message{
+  max-width:78%;
+  padding:11px 14px;
+  border-radius:14px;
+  word-wrap:break-word;
+}
+
+.message.me{
+  align-self:flex-end;
+  background:linear-gradient(135deg,var(--primary),#7869ef);
+  border-bottom-right-radius:3px;
+}
+
+.message.them{
+  align-self:flex-start;
+  background:#293354;
+  border-bottom-left-radius:3px;
+}
+
+.message small{
+  display:block;
+  opacity:.65;
+  margin-top:5px;
+  font-size:10px;
+}
+
+.chat-input{
+  display:flex;
+  gap:8px;
+  padding:15px;
+  border-top:1px solid var(--border);
+  background:#171d35;
+}
+
+.chat-input input{
+  flex:1;
+}
+
+.empty-chat{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:var(--muted);
+  padding:30px;
+}
+
+.notification{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:5000;
+  background:#171d35;
+  border:1px solid var(--secondary);
+  padding:15px 18px;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+  display:none;
+}
+
+footer{
+  text-align:center;
+  padding:40px 20px;
+  color:var(--muted);
+  border-top:1px solid var(--border);
+}
+
+@media(max-width:850px){
+
+  .nav-inner{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .nav-links{
+    justify-content:flex-start;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .chat{
+    grid-template-columns:1fr;
+  }
+
+  .chat-users{
+    max-height:190px;
+    border-right:0;
+    border-bottom:1px solid var(--border);
+  }
+
+  .dashboard-stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:500px){
+
+  .dashboard-stats{
+    grid-template-columns:1fr;
+  }
+
+  .message{
+    max-width:90%;
+  }
+
+  .chat-input{
+    flex-direction:column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav>
+<div class="nav-inner">
+
+  <div class="logo">
+    PRO<span>FINDER</span>
+  </div>
+
+  <div class="nav-links">
+
+    <a href="#home">Home</a>
+
+    <a href="#problem">Problem</a>
+
+    <a href="#analysis">AI Analysis</a>
+
+    <a href="#coaches"
+       id="coachesNavLink"
+       class="hidden">
+      Coaches
+    </a>
+
+    <a href="#dashboard">
+      Dashboard
+    </a>
+
+    <a href="#auth">
+      Login
+    </a>
+
+    <button onclick="openCoachRegistration()">
+      🧑‍🏫 Coach Register
+    </button>
+
+    <button onclick="openChat()">
+      💬 Messages
+    </button>
+
+  </div>
+
+</div>
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section id="home" class="hero">
+
+<div class="container hero-content">
+
+  <div class="icon">
+    🏆
+  </div>
+
+  <h1>
+    Your Talent.<br>
+    <span>Your Coach.</span><br>
+    Your Future.
+  </h1>
+
+  <p>
+    ProFinder uses AI-powered athlete analysis to connect
+    athletes with suitable sports coaches and gives them
+    a direct communication platform.
+  </p>
+
+  <div class="form-actions center">
+
+    <a href="#analysis"
+       class="btn btn-primary">
+      🤖 Find My Coach
+    </a>
+
+    <button class="btn btn-secondary"
+            onclick="openCoachRegistration()">
+      🧑‍🏫 Become a Coach
+    </button>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     PROBLEM
+===================================================== -->
+
+<section id="problem">
+
+<div class="container">
+
+  <h2>
+    The Problem
+  </h2>
+
+  <p class="section-subtitle">
+    Talented athletes can struggle to find suitable coaching,
+    especially when they live far from major sporting centres.
+  </p>
+
+  <div class="grid">
+
+    <div class="card">
+
+      <div class="icon">
+        🏘️
+      </div>
+
+      <h3>
+        Rural Talent
+      </h3>
+
+      <p>
+        Talented athletes may not have access to specialized
+        coaches in their local area.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <div class="icon">
+        👨‍🏫
+      </div>
+
+      <h3>
+        Coach Gap
+      </h3>
+
+      <p>
+        Athletes need coaches who understand their sport,
+        goals and training requirements.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <div class="icon">
+        📈
+      </div>
+
+      <h3>
+        Performance Tracking
+      </h3>
+
+      <p>
+        Athletes need simple tools to understand their
+        strengths and areas for improvement.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <div class="icon">
+        💬
+      </div>
+
+      <h3>
+        Communication Gap
+      </h3>
+
+      <p>
+        ProFinder allows athletes and coaches to communicate
+        directly through two-way messaging.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     AI ANALYSIS
+===================================================== -->
+
+<section id="analysis">
+
+<div class="container">
+
+  <h2>
+    🤖 AI Athlete Analysis
+  </h2>
+
+  <p class="section-subtitle">
+    Enter your details and ProFinder will analyse your
+    sporting profile.
+  </p>
+
+  <div class="card form-card">
+
+    <div class="form-grid">
+
+      <div class="field">
+
+        <label>
+          Athlete Name
+        </label>
+
+        <input id="athleteName"
+               placeholder="Enter your name">
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          Age
+        </label>
+
+        <input id="athleteAge"
+               type="number"
+               placeholder="Example: 16">
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          Sport
+        </label>
+
+        <select id="athleteSport">
+
+          <option value="">
+            Select Sport
+          </option>
+
+          <option>
+            Athletics
+          </option>
+
+          <option>
+            Football
+          </option>
+
+          <option>
+            Cricket
+          </option>
+
+          <option>
+            Basketball
+          </option>
+
+          <option>
+            Badminton
+          </option>
+
+          <option>
+            Swimming
+          </option>
+
+          <option>
+            Boxing
+          </option>
+
+          <option>
+            Tennis
+          </option>
+
+        </select>
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          Experience
+        </label>
+
+        <select id="athleteExperience">
+
+          <option value="">
+            Select
+          </option>
+
+          <option>
+            Beginner
+          </option>
+
+          <option>
+            Intermediate
+          </option>
+
+          <option>
+            Advanced
+          </option>
+
+        </select>
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          Location
+        </label>
+
+        <input id="athleteLocation"
+               placeholder="Village / Town / District">
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          Performance Score / 100
+        </label>
+
+        <input id="performance"
+               type="number"
+               min="0"
+               max="100"
+               placeholder="Example: 75">
+
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+
+      <button class="btn btn-primary"
+              onclick="analyzeAthlete()">
+
+        🤖 ANALYZE MY PROFILE
+
+      </button>
+
+    </div>
+
+    <div id="analysisResult"
+         class="hidden">
+
+      <div class="notice success">
+        ✅ AI Analysis Complete
+      </div>
+
+      <div class="grid">
+
+        <div class="card">
+
+          <h3>
+            Coach Match Score
+          </h3>
+
+          <div class="score"
+               id="matchScore">
+            --
+          </div>
+
+        </div>
+
+        <div class="card">
+
+          <h3>
+            🏅 Athlete Level
+          </h3>
+
+          <p id="athleteLevel">
+          </p>
+
+        </div>
+
+        <div class="card">
+
+          <h3>
+            🎯 Recommended Coach
+          </h3>
+
+          <p id="recommendedCoach">
+          </p>
+
+        </div>
+
+        <div class="card">
+
+          <h3>
+            💪 Strength
+          </h3>
+
+          <p id="strength">
+          </p>
+
+        </div>
+
+        <div class="card">
+
+          <h3>
+            📈 Improvement Area
+          </h3>
+
+          <p id="improvement">
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     COACHES
+     HIDDEN UNTIL A COACH ENROLLS
+===================================================== -->
+
+<section id="coaches"
+         class="hidden">
+
+<div class="container">
+
+  <h2>
+    👨‍🏫 Recommended Coaches
+  </h2>
+
+  <p class="section-subtitle">
+    Coaches enrolled on ProFinder.
+  </p>
+
+  <div id="coachGrid"
+       class="grid">
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     NO COACH MESSAGE
+===================================================== -->
+
+<section id="noCoachMessage">
+
+<div class="container">
+
+  <div class="card"
+       style="text-align:center">
+
+    <div class="icon">
+      🧑‍🏫
+    </div>
+
+    <h2>
+      Coaches Are Joining ProFinder
+    </h2>
+
+    <p>
+      No coach has enrolled yet.
+      Once a coach creates a ProFinder account,
+      their profile will appear here and athletes
+      will be able to contact them.
+    </p>
+
+    <div class="form-actions center">
+
+      <button class="btn btn-primary"
+              onclick="openCoachRegistration()">
+
+        🧑‍🏫 Register as a Coach
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     ATHLETE DASHBOARD
+===================================================== -->
+
+<section id="dashboard">
+
+<div class="container">
+
+  <h2>
+    🏃 Athlete Dashboard
+  </h2>
+
+  <p class="section-subtitle">
+    Track your development and communicate with coaches.
+  </p>
+
+  <div class="dashboard-stats">
+
+    <div class="stat">
+
+      <strong id="dashScore">
+        --
+      </strong>
+
+      AI Score
+
+    </div>
+
+    <div class="stat">
+
+      <strong id="dashMatch">
+        --
+      </strong>
+
+      Coach Match
+
+    </div>
+
+    <div class="stat">
+
+      <strong id="dashConversations">
+        0
+      </strong>
+
+      Conversations
+
+    </div>
+
+    <div class="stat">
+
+      <strong id="dashMessages">
+        0
+      </strong>
+
+      Messages
+
+    </div>
+
+  </div>
+
+  <div class="card"
+       style="margin-top:25px">
+
+    <h3>
+      👤 Athlete Account
+    </h3>
+
+    <p id="athleteAccountText">
+      Login as an athlete to see your account.
+    </p>
+
+    <div class="form-actions">
+
+      <button class="btn btn-primary"
+              onclick="scrollToAuth()">
+        Athlete Login
+      </button>
+
+      <button class="btn btn-secondary"
+              onclick="registerAthlete()">
+        Register
+      </button>
+
+      <button class="btn btn-success"
+              onclick="openChat()">
+        💬 My Messages
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     LOGIN
+===================================================== -->
+
+<section id="auth">
+
+<div class="container">
+
+  <h2>
+    🔐 Login
+  </h2>
+
+  <p class="section-subtitle">
+    Login as an athlete or enrolled coach.
+  </p>
+
+  <div class="card form-card">
+
+    <div class="field">
+
+      <label>
+        Email
+      </label>
+
+      <input id="loginEmail"
+             type="email"
+             placeholder="you@example.com">
+
+    </div>
+
+    <div class="field"
+         style="margin-top:15px">
+
+      <label>
+        Password
+      </label>
+
+      <input id="loginPassword"
+             type="password"
+             placeholder="Password">
+
+    </div>
+
+    <div class="field"
+         style="margin-top:15px">
+
+      <label>
+        Login As
+      </label>
+
+      <select id="loginRole">
+
+        <option value="athlete">
+          Athlete
+        </option>
+
+        <option value="coach">
+          Coach
+        </option>
+
+      </select>
+
+    </div>
+
+    <div class="form-actions">
+
+      <button class="btn btn-primary"
+              onclick="login()">
+        Login
+      </button>
+
+      <button class="btn btn-secondary"
+              onclick="registerAthlete()">
+        Register as Athlete
+      </button>
+
+      <button class="btn btn-secondary"
+              onclick="openCoachRegistration()">
+        Register as Coach
+      </button>
+
+    </div>
+
+    <div id="loginMessage"
+         class="notice hidden">
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     COACH DASHBOARD
+===================================================== -->
+
+<section id="coachDashboard"
+         class="hidden">
+
+<div class="container">
+
+  <h2>
+    🧑‍🏫 Coach Dashboard
+  </h2>
+
+  <div class="grid">
+
+    <div class="card">
+
+      <div class="profile-row">
+
+        <div class="avatar"
+             id="coachAvatar">
+          C
+        </div>
+
+        <div>
+
+          <h3 id="dashboardCoachName">
+            Coach
+          </h3>
+
+          <p id="dashboardCoachSport">
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <h3>
+        👥 Athletes
+      </h3>
+
+      <p id="athleteCount">
+        0 connected athletes
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <h3>
+        💬 Conversations
+      </h3>
+
+      <p id="coachConversationCount">
+        0 conversations
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <h3>
+        📍 Location
+      </h3>
+
+      <p id="dashboardCoachLocation">
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="card"
+       style="margin-top:25px">
+
+    <h3>
+      About Your Coaching
+    </h3>
+
+    <p id="dashboardCoachBio">
+    </p>
+
+    <div class="form-actions">
+
+      <button class="btn btn-primary"
+              onclick="openChat()">
+        💬 Open Athlete Messages
+      </button>
+
+      <button class="btn btn-danger"
+              onclick="logout()">
+        Logout
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     COACH REGISTRATION
+===================================================== -->
+
+<div id="coachModal"
+     class="modal">
+
+<div class="modal-box">
+
+  <button class="close"
+          onclick="closeModal('coachModal')">
+    ×
+  </button>
+
+  <h2>
+    🧑‍🏫 Coach Enrollment
+  </h2>
+
+  <p class="section-subtitle">
+    Create your coaching profile and start connecting
+    with athletes.
+  </p>
+
+  <div class="form-grid">
+
+    <div class="field">
+
+      <label>
+        Coach Name
+      </label>
+
+      <input id="coachName"
+             placeholder="Full name">
+
+    </div>
+
+    <div class="field">
+
+      <label>
+        Email
+      </label>
+
+      <input id="coachEmail"
+             type="email"
+             placeholder="coach@example.com">
+
+    </div>
+
+    <div class="field">
+
+      <label>
+        Password
+      </label>
+
+      <input id="coachPassword"
+             type="password"
+             placeholder="Create password">
+
+    </div>
+
+    <div class="field">
+
+      <label>
+        Sport
+      </label>
+
+      <select id="coachSport">
+
+        <option>
+          Athletics
+        </option>
+
+        <option>
+          Football
+        </option>
+
+        <option>
+          Cricket
+        </option>
+
+        <option>
+          Basketball
+        </option>
+
+        <option>
+          Badminton
+        </option>
+
+        <option>
+          Swimming
+        </option>
+
+        <option>
+          Boxing
+        </option>
+
+        <option>
+          Tennis
+        </option>
+
+      </select>
+
+    </div>
+
+    <div class="field">
+
+      <label>
+        Specialization
+      </label>
+
+      <input id="coachSpecialization"
+             placeholder="Example: Sprinting">
+
+    </div>
+
+    <div class="field">
+
+      <label>
+        Experience
+      </label>
+
+      <input id="coachExperience"
+             placeholder="Example: 8 years">
+
+    </div>
+
+    <div class="field">
+
+      <label>
+        Location
+      </label>
+
+      <input id="coachLocation"
+             placeholder="City / District">
+
+    </div>
+
+    <div class="field">
+
+      <label>
+        Qualification
+      </label>
+
+      <input id="coachQualification"
+             placeholder="Example: Certified Coach">
+
+    </div>
+
+    <div class="field full">
+
+      <label>
+        About You
+      </label>
+
+      <textarea id="coachBio"
+        placeholder="Describe your coaching experience..."></textarea>
+
+    </div>
+
+  </div>
+
+  <div class="notice warning">
+
+    Your profile will become available to athletes
+    after enrollment.
+
+  </div>
+
+  <div class="form-actions">
+
+    <button class="btn btn-success"
+            onclick="registerCoach()">
+
+      ✅ Enroll as Coach
+
+    </button>
+
+    <button class="btn btn-secondary"
+            onclick="closeModal('coachModal')">
+
+      Cancel
+
+    </button>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     TWO-WAY CHAT
+===================================================== -->
+
+<div id="chatModal"
+     class="modal">
+
+<div class="modal-box"
+     style="padding:0;overflow:hidden">
+
+  <button class="close"
+          onclick="closeModal('chatModal')">
+    ×
+  </button>
+
+  <div class="chat">
+
+    <!-- CONVERSATION LIST -->
+
+    <div class="chat-users">
+
+      <h3 style="margin-bottom:15px">
+        💬 Messages
+      </h3>
+
+      <div id="chatUsers">
+      </div>
+
+    </div>
+
+
+    <!-- CHAT AREA -->
+
+    <div class="chat-window">
+
+      <div class="chat-header"
+           id="chatHeader">
+
+        <div class="empty-chat">
+          Select a conversation
+        </div>
+
+      </div>
+
+      <div class="messages"
+           id="messages">
+
+        <div class="empty-chat">
+
+          <div>
+            <div style="font-size:45px">
+              💬
+            </div>
+
+            <h3>
+              Your Messages
+            </h3>
+
+            <p>
+              Select a coach or athlete to begin.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="chat-input">
+
+        <input id="messageInput"
+               placeholder="Type your message..."
+               onkeydown="handleMessageKey(event)">
+
+        <button class="btn btn-primary"
+                onclick="sendMessage()">
+
+          Send
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     NOTIFICATION
+===================================================== -->
+
+<div id="notification"
+     class="notification">
+</div>
+
+
+<footer>
+
+  <strong>
+    PROFINDER
+  </strong>
+
+  <br>
+
+  AI-powered sports opportunities for every athlete.
+
+  <br><br>
+
+  © 2026 ProFinder | Tinkerpreneur Project
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   STORAGE
+===================================================== */
+
+function getUsers(){
+
+  return JSON.parse(
+    localStorage.getItem(
+      "profinder_users"
+    ) || "[]"
+  );
+
+}
+
+function saveUsers(users){
+
+  localStorage.setItem(
+    "profinder_users",
+    JSON.stringify(users)
+  );
+
+}
+
+function getMessages(){
+
+  return JSON.parse(
+    localStorage.getItem(
+      "profinder_messages"
+    ) || "[]"
+  );
+
+}
+
+function saveMessages(messages){
+
+  localStorage.setItem(
+    "profinder_messages",
+    JSON.stringify(messages)
+  );
+
+}
+
+function getCurrentUser(){
+
+  return JSON.parse(
+    localStorage.getItem(
+      "profinder_currentUser"
+    ) || "null"
+  );
+
+}
+
+function setCurrentUser(user){
+
+  localStorage.setItem(
+    "profinder_currentUser",
+    JSON.stringify(user)
+  );
+
+}
+
+function escapeHTML(text){
+
+  return String(text || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   ENROLLED COACHES
+===================================================== */
+
+function getEnrolledCoaches(){
+
+  return getUsers().filter(
+    user =>
+      user.role === "coach" &&
+      user.enrolled === true
+  );
+
+}
+
+
+/* =====================================================
+   FIND USER
+===================================================== */
+
+function findUserById(id){
+
+  return getUsers().find(
+    user => user.id === id
+  );
+
+}
+
+
+/* =====================================================
+   COACH VISIBILITY
+===================================================== */
+
+function updateCoachVisibility(){
+
+  const coaches =
+    getEnrolledCoaches();
+
+  const section =
+    document.getElementById(
+      "coaches"
+    );
+
+  const empty =
+    document.getElementById(
+      "noCoachMessage"
+    );
+
+  const nav =
+    document.getElementById(
+      "coachesNavLink"
+    );
+
+  if(coaches.length === 0){
+
+    section.classList.add("hidden");
+
+    empty.classList.remove("hidden");
+
+    nav.classList.add("hidden");
+
+  }else{
+
+    section.classList.remove("hidden");
+
+    empty.classList.add("hidden");
+
+    nav.classList.remove("hidden");
+
+    renderCoaches();
+
+  }
+
+}
+
+
+/* =====================================================
+   RENDER COACHES
+===================================================== */
+
+function renderCoaches(){
+
+  const coaches =
+    getEnrolledCoaches();
+
+  const grid =
+    document.getElementById(
+      "coachGrid"
+    );
+
+  grid.innerHTML =
+    coaches.map(coach => `
+
+      <div class="card coach-card">
+
+        <div class="profile-row">
+
+          <div class="avatar">
+
+            ${escapeHTML(
+              coach.name
+                .charAt(0)
+                .toUpperCase()
+            )}
+
+          </div>
+
+          <div>
+
+            <h3>
+              ${escapeHTML(
+                coach.name
+              )}
+            </h3>
+
+            <span class="verified">
+              ✓ Enrolled Coach
+            </span>
+
+          </div>
+
+        </div>
+
+        <p style="margin-top:15px">
+
+          <strong>
+            ${escapeHTML(
+              coach.sport
+            )}
+          </strong>
+
+          •
+
+          ${escapeHTML(
+            coach.specialization
+          )}
+
+        </p>
+
+        <div class="rating">
+          ⭐ New Coach
+        </div>
+
+        <p>
+          Experience:
+          ${escapeHTML(
+            coach.experience
+          )}
+        </p>
+
+        <p>
+          📍
+          ${escapeHTML(
+            coach.location
+          )}
+        </p>
+
+        <p style="margin-top:10px">
+
+          ${escapeHTML(
+            coach.bio
+          )}
+
+        </p>
+
+        <p style="margin-top:10px">
+
+          🎓
+          ${escapeHTML(
+            coach.qualification
+          )}
+
+        </p>
+
+        <div class="form-actions">
+
+          <button
+            class="btn btn-primary"
+            onclick="messageCoach('${coach.id}')">
+
+            💬 Message Coach
+
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+/* =====================================================
+   AI ATHLETE ANALYSIS
+===================================================== */
+
+function analyzeAthlete(){
+
+  const name =
+    document.getElementById(
+      "athleteName"
+    ).value.trim();
+
+  const age =
+    Number(
+      document.getElementById(
+        "athleteAge"
+      ).value
+    );
+
+  const sport =
+    document.getElementById(
+      "athleteSport"
+    ).value;
+
+  const experience =
+    document.getElementById(
+      "athleteExperience"
+    ).value;
+
+  const location =
+    document.getElementById(
+      "athleteLocation"
+    ).value.trim();
+
+  let score =
+    Number(
+      document.getElementById(
+        "performance"
+      ).value
+    );
+
+  if(
+    !name ||
+    !age ||
+    !sport ||
+    !experience ||
+    !location ||
+    isNaN(score)
+  ){
+
+    alert(
+      "Please complete all athlete information."
+    );
+
+    return;
+
+  }
+
+  score =
+    Math.max(
+      0,
+      Math.min(100,score)
+    );
+
+  let level =
+    "Beginner";
+
+  if(score >= 80){
+
+    level =
+      "Advanced";
+
+  }else if(score >= 60){
+
+    level =
+      "Intermediate";
+
+  }
+
+  let strength =
+    "Motivation and learning potential";
+
+  let improvement =
+    "Fundamentals, fitness and regular training";
+
+  if(score >= 80){
+
+    strength =
+      "Strong athletic performance";
+
+    improvement =
+      "Advanced technique and competition strategy";
+
+  }else if(score >= 60){
+
+    strength =
+      "Good potential and developing skills";
+
+    improvement =
+      "Technique, fitness and consistency";
+
+  }
+
+  const coaches =
+    getEnrolledCoaches();
+
+  let match =
+    "--";
+
+  let recommendation =
+    "No coach has enrolled yet.";
+
+  if(coaches.length > 0){
+
+    const coach =
+      coaches.find(
+        c =>
+          c.sport === sport
+      ) || coaches[0];
+
+    match = 88;
+
+    if(coach.sport === sport)
+      match += 8;
+
+    if(experience === "Advanced")
+      match += 2;
+
+    match =
+      Math.min(
+        match,
+        99
+      );
+
+    recommendation =
+      coach.name +
+      " — " +
+      coach.specialization;
+
+  }
+
+  document.getElementById(
+    "matchScore"
+  ).textContent =
+    match === "--"
+      ? "--"
+      : match + "%";
+
+  document.getElementById(
+    "athleteLevel"
+  ).textContent =
+    level;
+
+  document.getElementById(
+    "recommendedCoach"
+  ).textContent =
+    recommendation;
+
+  document.getElementById(
+    "strength"
+  ).textContent =
+    strength;
+
+  document.getElementById(
+    "improvement"
+  ).textContent =
+    improvement;
+
+  document.getElementById(
+    "analysisResult"
+  ).classList.remove(
+    "hidden"
+  );
+
+  document.getElementById(
+    "dashScore"
+  ).textContent =
+    score;
+
+  document.getElementById(
+    "dashMatch"
+  ).textContent =
+    match === "--"
+      ? "--"
+      : match + "%";
+
+  localStorage.setItem(
+    "profinder_lastAnalysis",
+    JSON.stringify({
+      name,
+      age,
+      sport,
+      experience,
+      location,
+      score,
+      match
+    })
+  );
+
+}
+
+
+/* =====================================================
+   COACH REGISTRATION
+===================================================== */
+
+function openCoachRegistration(){
+
+  document.getElementById(
+    "coachModal"
+  ).style.display =
+    "flex";
+
+}
+
+
+function registerCoach(){
+
+  const coach = {
+
+    id:
+      "coach-" +
+      Date.now(),
+
+    name:
+      document.getElementById(
+        "coachName"
+      ).value.trim(),
+
+    email:
+      document.getElementById(
+        "coachEmail"
+      ).value.trim().toLowerCase(),
+
+    password:
+      document.getElementById(
+        "coachPassword"
+      ).value,
+
+    role:
+      "coach",
+
+    enrolled:
+      true,
+
+    sport:
+      document.getElementById(
+        "coachSport"
+      ).value,
+
+    specialization:
+      document.getElementById(
+        "coachSpecialization"
+      ).value.trim(),
+
+    experience:
+      document.getElementById(
+        "coachExperience"
+      ).value.trim(),
+
+    location:
+      document.getElementById(
+        "coachLocation"
+      ).value.trim(),
+
+    qualification:
+      document.getElementById(
+        "coachQualification"
+      ).value.trim(),
+
+    bio:
+      document.getElementById(
+        "coachBio"
+      ).value.trim(),
+
+    enrolledAt:
+      new Date().toISOString()
+
+  };
+
+  if(
+    !coach.name ||
+    !coach.email ||
+    !coach.password ||
+    !coach.specialization ||
+    !coach.experience ||
+    !coach.location ||
+    !coach.qualification ||
+    !coach.bio
+  ){
+
+    alert(
+      "Please complete all coach enrollment fields."
+    );
+
+    return;
+
+  }
+
+  const users =
+    getUsers();
+
+  if(
+    users.some(
+      user =>
+        user.email ===
+        coach.email
+    )
+  ){
+
+    alert(
+      "An account with this email already exists."
+    );
+
+    return;
+
+  }
+
+  users.push(
+    coach
+  );
+
+  saveUsers(
+    users
+  );
+
+  updateCoachVisibility();
+
+  closeModal(
+    "coachModal"
+  );
+
+  clearCoachForm();
+
+  showNotification(
+    "🎉 Coach enrolled successfully! Athletes can now see and message this coach."
+  );
+
+  document.getElementById(
+    "coaches"
+  ).scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+
+function clearCoachForm(){
+
+  [
+    "coachName",
+    "coachEmail",
+    "coachPassword",
+    "coachSpecialization",
+    "coachExperience",
+    "coachLocation",
+    "coachQualification",
+    "coachBio"
+  ].forEach(
+    id =>
+      document.getElementById(
+        id
+      ).value=""
+  );
+
+}
+
+
+/* =====================================================
+   ATHLETE REGISTRATION
+===================================================== */
+
+function registerAthlete(){
+
+  const name =
+    prompt(
+      "Enter your name:"
+    );
+
+  if(!name)return;
+
+  const email =
+    prompt(
+      "Enter your email:"
+    );
+
+  if(!email)return;
+
+  const password =
+    prompt(
+      "Create a password:"
+    );
+
+  if(!password)return;
+
+  const users =
+    getUsers();
+
+  if(
+    users.some(
+      user =>
+        user.email ===
+        email.toLowerCase()
+    )
+  ){
+
+    alert(
+      "An account with this email already exists."
+    );
+
+    return;
+
+  }
+
+  const athlete = {
+
+    id:
+      "athlete-" +
+      Date.now(),
+
+    name,
+
+    email:
+      email.toLowerCase(),
+
+    password,
+
+    role:
+      "athlete"
+
+  };
+
+  users.push(
+    athlete
+  );
+
+  saveUsers(
+    users
+  );
+
+  showNotification(
+    "✅ Athlete account created. You can now login."
+  );
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+function login(){
+
+  const email =
+    document.getElementById(
+      "loginEmail"
+    ).value.trim().toLowerCase();
+
+  const password =
+    document.getElementById(
+      "loginPassword"
+    ).value;
+
+  const role =
+    document.getElementById(
+      "loginRole"
+    ).value;
+
+  if(
+    !email ||
+    !password
+  ){
+
+    showLoginMessage(
+      "Please enter your email and password."
+    );
+
+    return;
+
+  }
+
+  const user =
+    getUsers().find(
+      u =>
+        u.email === email &&
+        u.password === password &&
+        u.role === role
+    );
+
+  if(!user){
+
+    showLoginMessage(
+      "Invalid email, password or account type."
+    );
+
+    return;
+
+  }
+
+  if(
+    role === "coach" &&
+    user.enrolled !== true
+  ){
+
+    showLoginMessage(
+      "This coach is not enrolled."
+    );
+
+    return;
+
+  }
+
+  setCurrentUser(
+    user
+  );
+
+  showLoginMessage(
+    "✅ Login successful!"
+  );
+
+  if(
+    user.role === "coach"
+  ){
+
+    showCoachDashboard(
+      user
+    );
+
+  }else{
+
+    showAthleteDashboard(
+      user
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   LOGIN MESSAGE
+===================================================== */
+
+function showLoginMessage(message){
+
+  const box =
+    document.getElementById(
+      "loginMessage"
+    );
+
+  box.textContent =
+    message;
+
+  box.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+/* =====================================================
+   ATHLETE DASHBOARD
+===================================================== */
+
+function showAthleteDashboard(
+  user
+){
+
+  document.getElementById(
+    "athleteAccountText"
+  ).innerHTML =
+    "Logged in as <strong>" +
+    escapeHTML(
+      user.name
+    ) +
+    "</strong>.";
+
+  updateAthleteMessageStats(
+    user
+  );
+
+  document.getElementById(
+    "dashboard"
+  ).scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =====================================================
+   COACH DASHBOARD
+===================================================== */
+
+function showCoachDashboard(
+  user
+){
+
+  const section =
+    document.getElementById(
+      "coachDashboard"
+    );
+
+  section.classList.remove(
+    "hidden"
+  );
+
+  document.getElementById(
+    "dashboardCoachName"
+  ).textContent =
+    user.name;
+
+  document.getElementById(
+    "dashboardCoachSport"
+  ).textContent =
+    user.sport +
+    " • " +
+    user.specialization;
+
+  document.getElementById(
+    "dashboardCoachLocation"
+  ).textContent =
+    user.location;
+
+  document.getElementById(
+    "dashboardCoachBio"
+  ).textContent =
+    user.bio;
+
+  document.getElementById(
+    "coachAvatar"
+  ).textContent =
+    user.name
+      .charAt(0)
+      .toUpperCase();
+
+  updateCoachStats(
+    user
+  );
+
+  section.scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =====================================================
+   ATHLETE MESSAGE STATISTICS
+===================================================== */
+
+function updateAthleteMessageStats(
+  user
+){
+
+  const messages =
+    getMessages();
+
+  const relevant =
+    messages.filter(
+      m =>
+        m.from === user.id ||
+        m.to === user.id
+    );
+
+  const conversations =
+    new Set(
+      relevant.map(
+        m =>
+          m.from === user.id
+            ? m.to
+            : m.from
+      )
+    );
+
+  document.getElementById(
+    "dashConversations"
+  ).textContent =
+    conversations.size;
+
+  document.getElementById(
+    "dashMessages"
+  ).textContent =
+    relevant.length;
+
+}
+
+
+/* =====================================================
+   COACH MESSAGE STATISTICS
+===================================================== */
+
+function updateCoachStats(
+  coach
+){
+
+  const messages =
+    getMessages();
+
+  const relevant =
+    messages.filter(
+      m =>
+        m.from === coach.id ||
+        m.to === coach.id
+    );
+
+  const athletes =
+    new Set(
+      relevant.map(
+        m =>
+          m.from === coach.id
+            ? m.to
+            : m.from
+      )
+    );
+
+  document.getElementById(
+    "athleteCount"
+  ).textContent =
+    athletes.size +
+    " connected athlete(s)";
+
+  document.getElementById(
+    "coachConversationCount"
+  ).textContent =
+    athletes.size +
+    " conversation(s)";
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout(){
+
+  localStorage.removeItem(
+    "profinder_currentUser"
+  );
+
+  document.getElementById(
+    "coachDashboard"
+  ).classList.add(
+    "hidden"
+  );
+
+  showNotification(
+    "You have been logged out."
+  );
+
+}
+
+
+/* =====================================================
+   TWO-WAY CHAT STATE
+===================================================== */
+
+let selectedChatUser =
+  null;
+
+
+/* =====================================================
+   ATHLETE -> COACH
+===================================================== */
+
+function messageCoach(
+  coachId
+){
+
+  const current =
+    getCurrentUser();
+
+  if(!current){
+
+    alert(
+      "Please login as an athlete before messaging a coach."
+    );
+
+    scrollToAuth();
+
+    return;
+
+  }
+
+  if(
+    current.role !== "athlete"
+  ){
+
+    alert(
+      "Only athlete accounts can contact coaches from the coach directory."
+    );
+
+    return;
+
+  }
+
+  const coach =
+    getEnrolledCoaches()
+      .find(
+        c =>
+          c.id === coachId
+      );
+
+  if(!coach){
+
+    alert(
+      "This coach is no longer enrolled."
+    );
+
+    updateCoachVisibility();
+
+    return;
+
+  }
+
+  selectedChatUser =
+    coach;
+
+  openChat();
+
+  renderChatUsers();
+
+  renderConversation();
+
+}
+
+
+/* =====================================================
+   OPEN CHAT
+===================================================== */
+
+function openChat(){
+
+  const current =
+    getCurrentUser();
+
+  if(!current){
+
+    alert(
+      "Please login first to use messaging."
+    );
+
+    scrollToAuth();
+
+    return;
+
+  }
+
+  document.getElementById(
+    "chatModal"
+  ).style.display =
+    "flex";
+
+  renderChatUsers();
+
+  if(selectedChatUser){
+
+    renderConversation();
+
+  }
+
+}
+
+
+/* =====================================================
+   BUILD CONVERSATION LIST
+===================================================== */
+
+function renderChatUsers(){
+
+  const current =
+    getCurrentUser();
+
+  if(!current)return;
+
+  let contacts = [];
+
+
+  /*
+     ATHLETE SIDE:
+     Show every enrolled coach.
+     This allows an athlete to start
+     a new conversation.
+  */
+
+  if(
+    current.role === "athlete"
+  ){
+
+    contacts =
+      getEnrolledCoaches();
+
+  }
+
+
+  /*
+     COACH SIDE:
+     Show ONLY athletes who have
+     already messaged this coach.
+  */
+
+  else if(
+    current.role === "coach"
+  ){
+
+    const messages =
+      getMessages();
+
+    const athleteIds =
+      [
+        ...new Set(
+          messages
+            .filter(
+              m =>
+                m.from === current.id ||
+                m.to === current.id
+            )
+            .map(
+              m =>
+                m.from === current.id
+                  ? m.to
+                  : m.from
+            )
+        )
+      ];
+
+    contacts =
+      getUsers().filter(
+        user =>
+          user.role === "athlete" &&
+          athleteIds.includes(
+            user.id
+          )
+      );
+
+  }
+
+
+  const container =
+    document.getElementById(
+      "chatUsers"
+    );
+
+
+  if(
+    contacts.length === 0
+  ){
+
+    container.innerHTML = `
+
+      <div style="color:#aeb5d0;text-align:center;padding:15px">
+
+        ${
+          current.role === "athlete"
+            ? "No enrolled coaches yet."
+            : "No athletes have messaged you yet."
+        }
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    contacts.map(
+      user => {
+
+        const unread =
+          countUnreadMessages(
+            current.id,
+            user.id
+          );
+
+        return `
+
+          <div
+            class="chat-user ${
+              selectedChatUser &&
+              selectedChatUser.id === user.id
+                ? "active"
+                : ""
+            }"
+            onclick="selectChatUser('${user.id}')">
+
+            <div class="profile-row">
+
+              <div class="avatar small-avatar">
+
+                ${escapeHTML(
+                  user.name
+                    .charAt(0)
+                    .toUpperCase()
+                )}
+
+              </div>
+
+              <div style="flex:1">
+
+                <div class="chat-user-name">
+
+                  ${escapeHTML(
+                    user.name
+                  )}
+
+                  ${
+                    unread > 0
+                      ? `
+                        <span class="unread">
+                          ${unread}
+                        </span>
+                      `
+                      : ""
+                  }
+
+                </div>
+
+                <div class="chat-user-type">
+
+                  ${
+                    user.role === "coach"
+                      ? escapeHTML(
+                          user.sport +
+                          " Coach"
+                        )
+                      : "Athlete"
+                  }
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        `;
+
+      }
+    ).join("");
+
+}
+
+
+/* =====================================================
+   SELECT CONVERSATION
+===================================================== */
+
+function selectChatUser(
+  id
+){
+
+  const current =
+    getCurrentUser();
+
+  if(
+    current.role === "athlete"
+  ){
+
+    selectedChatUser =
+      getEnrolledCoaches()
+        .find(
+          c =>
+            c.id === id
+        );
+
+  }else{
+
+    selectedChatUser =
+      getUsers()
+        .find(
+          u =>
+            u.id === id
+        );
+
+  }
+
+  markConversationRead(
+    current.id,
+    id
+  );
+
+  renderChatUsers();
+
+  renderConversation();
+
+}
+
+
+/* =====================================================
+   RENDER CHAT
+===================================================== */
+
+function renderConversation(){
+
+  const current =
+    getCurrentUser();
+
+  if(
+    !current ||
+    !selectedChatUser
+  ){
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "chatHeader"
+  ).innerHTML = `
+
+    <div class="profile-row">
+
+      <div class="avatar small-avatar">
+
+        ${escapeHTML(
+          selectedChatUser.name
+            .charAt(0)
+            .toUpperCase()
+        )}
+
+      </div>
+
+      <div>
+
+        <strong>
+          ${escapeHTML(
+            selectedChatUser.name
+          )}
+        </strong>
+
+        <div style="color:#aeb5d0;font-size:12px">
+
+          ${
+            selectedChatUser.role === "coach"
+              ? escapeHTML(
+                  selectedChatUser.sport +
+                  " • " +
+                  selectedChatUser.specialization
+                )
+              : "Athlete"
+          }
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  const messages =
+    getMessages().filter(
+      message =>
+        (
+          message.from === current.id &&
+          message.to === selectedChatUser.id
+        )
+        ||
+        (
+          message.from === selectedChatUser.id &&
+          message.to === current.id
+        )
+    );
+
+
+  const container =
+    document.getElementById(
+      "messages"
+    );
+
+
+  if(
+    messages.length === 0
+  ){
+
+    container.innerHTML = `
+
+      <div class="empty-chat">
+
+        <div>
+
+          <div style="font-size:45px">
+            💬
+          </div>
+
+          <h3>
+            Start the conversation
+          </h3>
+
+          <p>
+            Send a message to
+            ${escapeHTML(
+              selectedChatUser.name
+            )}.
+          </p>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    messages.map(
+      message => `
+
+        <div class="message ${
+          message.from === current.id
+            ? "me"
+            : "them"
+        }">
+
+          ${escapeHTML(
+            message.text
+          )}
+
+          <small>
+
+            ${
+              message.from === current.id
+                ? "You"
+                : escapeHTML(
+                    selectedChatUser.name
+                  )
+            }
+
+            •
+            ${formatTime(
+              message.time
+            )}
+
+          </small>
+
+        </div>
+
+      `
+    ).join("");
+
+
+  container.scrollTop =
+    container.scrollHeight;
+
+}
+
+
+/* =====================================================
+   SEND MESSAGE
+   BOTH ATHLETE AND COACH USE THIS
+===================================================== */
+
+function sendMessage(){
+
+  const current =
+    getCurrentUser();
+
+  if(!current){
+
+    alert(
+      "Please login first."
+    );
+
+    return;
+
+  }
+
+  if(!selectedChatUser){
+
+    alert(
+      "Please select a conversation."
+    );
+
+    return;
+
+  }
+
+
+  /*
+     Make sure athlete can only
+     message enrolled coaches.
+  */
+
+  if(
+    current.role === "athlete"
+  ){
+
+    const coachStillEnrolled =
+      getEnrolledCoaches()
+        .some(
+          coach =>
+            coach.id ===
+            selectedChatUser.id
+        );
+
+    if(
+      !coachStillEnrolled
+    ){
+
+      alert(
+        "This coach is no longer enrolled."
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  const input =
+    document.getElementById(
+      "messageInput"
+    );
+
+  const text =
+    input.value.trim();
+
+
+  if(!text)return;
+
+
+  const messages =
+    getMessages();
+
+
+  messages.push({
+
+    id:
+      "message-" +
+      Date.now() +
+      "-" +
+      Math.random()
+        .toString(36)
+        .substring(2,8),
+
+    from:
+      current.id,
+
+    to:
+      selectedChatUser.id,
+
+    text:
+      text,
+
+    time:
+      new Date().toISOString(),
+
+    read:
+      false
+
+  });
+
+
+  saveMessages(
+    messages
+  );
+
+
+  input.value = "";
+
+
+  renderConversation();
+
+  renderChatUsers();
+
+
+  if(
+    current.role === "athlete"
+  ){
+
+    updateAthleteMessageStats(
+      current
+    );
+
+  }else{
+
+    updateCoachStats(
+      current
+    );
+
+  }
+
+
+  showNotification(
+    "Message sent successfully."
+  );
+
+}
+
+
+/* =====================================================
+   ENTER KEY FOR CHAT
+===================================================== */
+
+function handleMessageKey(
+  event
+){
+
+  if(
+    event.key === "Enter"
+  ){
+
+    event.preventDefault();
+
+    sendMessage();
+
+  }
+
+}
+
+
+/* =====================================================
+   UNREAD MESSAGES
+===================================================== */
+
+function countUnreadMessages(
+  userId,
+  otherId
+){
+
+  return getMessages()
+    .filter(
+      message =>
+        message.from === otherId &&
+        message.to === userId &&
+        message.read !== true
+    ).length;
+
+}
+
+
+/* =====================================================
+   MARK CONVERSATION READ
+===================================================== */
+
+function markConversationRead(
+  userId,
+  otherId
+){
+
+  const messages =
+    getMessages();
+
+  let changed = false;
+
+  messages.forEach(
+    message => {
+
+      if(
+        message.from === otherId &&
+        message.to === userId &&
+        message.read !== true
+      ){
+
+        message.read = true;
+
+        changed = true;
+
+      }
+
+    }
+  );
+
+  if(changed){
+
+    saveMessages(
+      messages
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   TIME FORMAT
+===================================================== */
+
+function formatTime(
+  iso
+){
+
+  try{
+
+    return new Date(
+      iso
+    ).toLocaleString(
+      [],
+      {
+        dateStyle:"short",
+        timeStyle:"short"
+      }
+    );
+
+  }catch(error){
+
+    return "";
+
+  }
+
+}
+
+
+/* =====================================================
+   NOTIFICATION
+===================================================== */
+
+function showNotification(
+  message
+){
+
+  const box =
+    document.getElementById(
+      "notification"
+    );
+
+  box.textContent =
+    message;
+
+  box.style.display =
+    "block";
+
+  clearTimeout(
+    window.notificationTimer
+  );
+
+  window.notificationTimer =
+    setTimeout(
+      () => {
+
+        box.style.display =
+          "none";
+
+      },
+      3500
+    );
+
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function closeModal(
+  id
+){
+
+  document.getElementById(
+    id
+  ).style.display =
+    "none";
+
+}
+
+
+window.addEventListener(
+  "click",
+  function(event){
+
+    if(
+      event.target.classList
+        .contains("modal")
+    ){
+
+      event.target.style.display =
+        "none";
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   SCROLL
+===================================================== */
+
+function scrollToAuth(){
+
+  document.getElementById(
+    "auth"
+  ).scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =====================================================
+   STARTUP
+===================================================== */
+
+function startup(){
+
+  /*
+     Do NOT create demo coaches.
+
+     Only coaches that actually register
+     are displayed.
+  */
+
+  updateCoachVisibility();
+
+
+  /*
+     Restore previous AI analysis.
+  */
+
+  const saved =
+    JSON.parse(
+      localStorage.getItem(
+        "profinder_lastAnalysis"
+      ) || "null"
+    );
+
+
+  if(saved){
+
+    document.getElementById(
+      "dashScore"
+    ).textContent =
+      saved.score;
+
+    document.getElementById(
+      "dashMatch"
+    ).textContent =
+      saved.match === "--"
+        ? "--"
+        : saved.match + "%";
+
+  }
+
+
+  /*
+     Restore current login.
+  */
+
+  const current =
+    getCurrentUser();
+
+  if(current){
+
+    if(
+      current.role === "coach"
+    ){
+
+      showCoachDashboard(
+        current
+      );
+
+    }else{
+
+      showAthleteDashboard(
+        current
+      );
+
+    }
+
+  }
+
+}
+
+
+/* =====================================================
+   RUN
+===================================================== */
+
+startup();
+
+</script>
+
+</body>
+</html>
+```
